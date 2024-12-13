@@ -8,3 +8,4 @@ Route::get('/', function () {
 });
 
 require __DIR__.'/transactions.php';
+require __DIR__.'/wallets.php';

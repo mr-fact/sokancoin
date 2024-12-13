@@ -11,6 +11,11 @@ class Wallet extends Model
 
     protected $fillable = ['user_id', 'amount', 'address'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
     // Method to generate a random address
     public static function generateRandomAddress($length = 21)
     {
