@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use App\Models\Wallet;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -54,6 +55,31 @@ class TransactionController extends Controller
             return redirect()->route('transactions.index')->with('success', 'Transaction deleted successfully');
         } catch (\Exception $e) {
             return redirect()->route('transactions.index')->with('error', $e->getMessage());
+        }
+    }
+    public function create()
+    {
+        $wallets = Wallet::all(); // Fetch all wallets for the dropdowns
+        return view('transactions.create', compact('wallets'));
+    }
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'origin_wallet_id' => 'required|exists:wallets,id|different:destination_wallet_id',
+            'destination_wallet_id' => 'required|exists:wallets,id',
+            'amount' => 'required|numeric|min:1',
+        ]);
+
+        try {
+            $transaction = Transaction::create([
+                'origin_wallet_id' => $validated['origin_wallet_id'],
+                'destination_wallet_id' => $validated['destination_wallet_id'],
+                'amount' => $validated['amount'],
+            ]);
+
+            return redirect()->route('wallets.index')->with('success', 'Transaction created successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'An error occurred while creating the transaction.');
         }
     }
 }

@@ -14,6 +14,7 @@
                 <div class="space-x-6">
                     <a href="{{ route('transactions.index') }}" class="text-white hover:text-gray-200">Transactions (Admin Page)</a>
                     <a href="{{ route('wallets.index') }}" class="text-white hover:text-gray-200">Wallets</a>
+                    <a href="{{ route('transactions.create') }}" class="text-white hover:text-gray-200">New Transaction</a>
                 </div>
             </div>
         </nav>
