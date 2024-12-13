@@ -42,6 +42,9 @@
                         </td>
                         <td class="px-4 py-2">{{ number_format($transaction->amount) }}</td>
                         <td class="px-4 py-2">
+                            @if (!$transaction->status)
+                                <a href="{{ route('transactions.edit', $transaction->id) }}">Edit</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

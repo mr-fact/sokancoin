@@ -82,4 +82,27 @@ class TransactionController extends Controller
             return back()->with('error', 'An error occurred while creating the transaction.');
         }
     }
+    public function edit($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        return view('transactions.edit', compact('transaction'));
+    }
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:1000',
+        ]);
+
+        try {
+            $transaction = Transaction::findOrFail($id);
+            if ($transaction->status){
+                throw new \Exception("You can't edit accepted transaction");
+            }
+            $transaction->amount = $validated['amount'];
+            $transaction->save(); 
+            return redirect()->route('wallets.index')->with('success', 'Transaction amount updated successfully.');
+        } catch (\Exception $e) {
+            return back()->with('error', $e->getMessage());
+        }
+    }
 }
