@@ -1,5 +1,7 @@
 # sokancoin
 
+![Screenshot](https://github.com/user-attachments/assets/dcd966f3-723a-49ee-9240-bee5eb9f368e)
+
 This is a payment management system built with Laravel. It allows users to create transactions between wallets and track them efficiently. 
 
 ## Features
